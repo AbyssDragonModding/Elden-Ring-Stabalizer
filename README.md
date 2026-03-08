@@ -3,11 +3,13 @@
 ## [Building from source]
 Note: This requires downloading and setting up a few development based tools to build from source yourself, it will take a couple minutes, if you rather not deal with it, just download the prebuilt versions, We will be using Winget (windows package manager) to install of these.
 ﻿Tools we will install: we will need to install 3 things to build from source a C++ compiler (GCC), CMake, and Git
+
 ## ﻿[Installing CMake and Git]
 - Open up command prompt 
 - and type in without quotes "winget install Git.Git"
 - next type in "winget install Kitware.CMake"
-﻿## [Installing GCC]
+
+ ## [Installing GCC]
 ﻿- Follow this guide: https://phoenixnap.com/kb/install-gcc-windows
 
 ## [Building the project]
