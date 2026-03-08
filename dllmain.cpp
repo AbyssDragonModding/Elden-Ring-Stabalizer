@@ -6,7 +6,6 @@
 #include <tchar.h>
 
 const bool DEBUG_MODE = false;
-const std::string SERVICE_NAME = "SSDPSRV";
 
 DWORD_PTR SetCpuAffinity()
 {
@@ -37,16 +36,12 @@ DWORD_PTR SetCpuAffinity()
     }
     return processAffinityMask;
 }
-BOOL IsServiceRunning(std::string serviceName)
+BOOL IsServiceRunning()
 {
-    // Convert string to LPCWSTR
-    std::wstring stemp = std::wstring(serviceName.begin(), serviceName.end());
-    LPCSTR servStr = (LPCSTR)stemp.c_str();
-
     SC_HANDLE schSCManager = OpenSCManagerA(nullptr, nullptr, SC_MANAGER_ENUMERATE_SERVICE);
     if (!schSCManager) return false;
 
-    SC_HANDLE schService = OpenService(schSCManager, servStr, SERVICE_QUERY_STATUS);
+    SC_HANDLE schService = OpenService(schSCManager, "SSDPSRV", SERVICE_QUERY_STATUS);
     if (!schService) {
         CloseServiceHandle(schSCManager);
         return false;
@@ -66,20 +61,16 @@ BOOL IsServiceRunning(std::string serviceName)
     return isRunning;
 }
 
-BOOL StopService(std::string serviceName)
+BOOL StopService()
 {
-    // Convert string to LPCWSTR
-    std::wstring stemp = std::wstring(serviceName.begin(), serviceName.end());
-    LPCWSTR servStr = stemp.c_str();
-
     // Open SCM
     SC_HANDLE scm = OpenSCManagerW(nullptr, nullptr, SC_MANAGER_CONNECT);
     if (!scm) return false;
 
     // Open the service with STOP + QUERY access
-    SC_HANDLE svc = OpenServiceW(
+    SC_HANDLE svc = OpenService(
         scm,
-        servStr,
+        "SSDPSRV",
         SERVICE_STOP | SERVICE_QUERY_STATUS
     );
 
@@ -156,16 +147,16 @@ void procThread()
     Sleep(1000); // Sleep for 1 second
     SetCpuAffinity();
 
-    if (IsServiceRunning(SERVICE_NAME))
-        StopService(SERVICE_NAME);
+    if (IsServiceRunning())
+        StopService();
 
     // wait for 2 min before checking again
     while (true)
     {
         Sleep(2 * 60 * 1000);
         // check if the service is running and stop it
-        if (IsServiceRunning(SERVICE_NAME))
-            StopService(SERVICE_NAME);
+        if (IsServiceRunning())
+            StopService();
     }
 }
 
