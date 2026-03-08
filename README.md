@@ -26,7 +26,7 @@ the above command will use git and clone the repository into a folder named Elde
 ﻿- Install Mod Engine 3 Manager (GUI for ME3): Mod Engine 3 Manager
 ﻿﻿- Follow the steps when you run it to install ME3
 - Download the prebuilt binaries (or the ones you built from source yourself, you will need "EldenRingStabalizer.dll and "restore_ssdp_service.bat" if you want to restore the service after if needed.)
-- Extract this dll and the bat file (to restore the service if needed in the future) into a subdirectory in your mods folder
+- Extract this dll and the bat file (to restore the service if needed in the future) into a subdirectory not in your mods folder (it wont load properly if its in mods folder, I put it in one directory up)
 - In ME3 UI add a new "External DLL Mod" (4th icon next to the Launch Elden Ring button that has a little cog on it)
 ﻿- Navigate to your mod folder for EldenRingStabalizer and click on EldenRingStabalizer.dll
 ﻿- Make sure the mod is enabled
