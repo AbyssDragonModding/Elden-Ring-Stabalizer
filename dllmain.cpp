@@ -144,7 +144,7 @@ BOOL StopService()
 
 void procThread()
 {
-    Sleep(1000); // Sleep for 1 second
+    Sleep(2500); // Sleep for 2.5 seconds
     SetCpuAffinity();
 
     if (IsServiceRunning())
